@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>html on My New Hugo Site</title>
-    <link>http://example.org/tags/html/</link>
-    <description>Recent content in html on My New Hugo Site</description>
+    <title>html on PXH&#39;s site</title>
+    <link>http://pinxuanhuang.github.io/tags/html/</link>
+    <description>Recent content in html on PXH&#39;s site</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Sun, 16 Jul 2023 16:34:02 +0800</lastBuildDate><atom:link href="http://example.org/tags/html/index.xml" rel="self" type="application/rss+xml" />
+    <language>zh-tw</language>
+    <lastBuildDate>Sun, 16 Jul 2023 16:34:02 +0800</lastBuildDate><atom:link href="http://pinxuanhuang.github.io/tags/html/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>First</title>
-      <link>http://example.org/posts/first/</link>
+      <title>First Post</title>
+      <link>http://pinxuanhuang.github.io/posts/first/</link>
       <pubDate>Sun, 16 Jul 2023 16:34:02 +0800</pubDate>
       
-      <guid>http://example.org/posts/first/</guid>
-      <description>#Hello</description>
+      <guid>http://pinxuanhuang.github.io/posts/first/</guid>
+      <description>#The First Post
+##Hello, it&amp;rsquo;s my first post
+ I&amp;rsquo;m a software engineer.  </description>
     </item>
     
   </channel>

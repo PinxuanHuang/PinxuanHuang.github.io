@@ -3,42 +3,47 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://example.org/categories/</loc>
+    <loc>http://pinxuanhuang.github.io/categories/</loc>
     <lastmod>2023-07-16T16:34:02+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/tags/css/</loc>
+    <loc>http://pinxuanhuang.github.io/tags/css/</loc>
     <lastmod>2023-07-16T16:34:02+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/posts/first/</loc>
+    <loc>http://pinxuanhuang.github.io/posts/first/</loc>
     <lastmod>2023-07-16T16:34:02+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/tags/html/</loc>
+    <loc>http://pinxuanhuang.github.io/tags/html/</loc>
     <lastmod>2023-07-16T16:34:02+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/</loc>
+    <loc>http://pinxuanhuang.github.io/tags/markdown/</loc>
     <lastmod>2023-07-16T16:34:02+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/posts/</loc>
+    <loc>http://pinxuanhuang.github.io/posts/</loc>
     <lastmod>2023-07-16T16:34:02+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/tags/</loc>
+    <loc>http://pinxuanhuang.github.io/</loc>
     <lastmod>2023-07-16T16:34:02+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/categories/technology/</loc>
+    <loc>http://pinxuanhuang.github.io/tags/</loc>
+    <lastmod>2023-07-16T16:34:02+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://pinxuanhuang.github.io/categories/technology/</loc>
     <lastmod>2023-07-16T16:34:02+08:00</lastmod>
   </url>
   
