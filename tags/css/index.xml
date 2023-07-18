@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>css on PXH&#39;s site</title>
-    <link>http://pinxuanhuang.github.io/tags/css/</link>
-    <description>Recent content in css on PXH&#39;s site</description>
+    <title>css on PinxuanHuang&#39;s Site</title>
+    <link>https://pinxuanhuang.github.io/tags/css/</link>
+    <description>Recent content in css on PinxuanHuang&#39;s Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-tw</language>
-    <lastBuildDate>Sun, 16 Jul 2023 16:34:02 +0800</lastBuildDate><atom:link href="http://pinxuanhuang.github.io/tags/css/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>Copyright &amp;#169; 2020 Softorage. All rights reserved.</copyright>
+    <lastBuildDate>Sun, 16 Jul 2023 16:34:02 +0800</lastBuildDate>
+    
+	<atom:link href="https://pinxuanhuang.github.io/tags/css/index.xml" rel="self" type="application/rss+xml" />
+    
+    
     <item>
       <title>First Post</title>
-      <link>http://pinxuanhuang.github.io/posts/first/</link>
+      <link>https://pinxuanhuang.github.io/post/first/</link>
       <pubDate>Sun, 16 Jul 2023 16:34:02 +0800</pubDate>
       
-      <guid>http://pinxuanhuang.github.io/posts/first/</guid>
-      <description>#The First Post
-##Hello, it&amp;rsquo;s my first post
- I&amp;rsquo;m a software engineer.  </description>
+      <guid>https://pinxuanhuang.github.io/post/first/</guid>
+      <description>The First Post Hello, it&amp;rsquo;s my first post  I&amp;rsquo;m a software engineer.  </description>
     </item>
     
   </channel>
