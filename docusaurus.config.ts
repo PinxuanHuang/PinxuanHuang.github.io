@@ -24,7 +24,8 @@ const config: Config = {
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'PinxuanHuang', // Usually your GitHub org/user name.
   projectName: 'PinxuanHuang.github.io', // Usually your repo name.
-
+  deploymentBranch: 'gh-pages', // 告訴 Docusaurus 要把編譯好的網頁丟到 gh-pages 分支
+  trailingSlash: false,
   onBrokenLinks: 'throw',
 
   // Even if you don't use internationalization, you can use this field to set
