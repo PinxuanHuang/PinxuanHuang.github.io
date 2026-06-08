@@ -6,12 +6,16 @@ sidebar_label: GPIO
 
 # GPIO Introduction
 
-There are several ports, and each port contains multiple pins (e.g., 16 pins on Port A).
-Each port has its own configuration registers.
+```
+The following content takes STM32F407 as an example.
+```
+
+- There are several ports, and each port contains multiple pins (e.g., 16 pins on Port A).
+- Each port has its own configuration registers.
 
 ## Registers
 
-- Mode
+- Mode Register
   - Input
   - Output (Push Pull or Open Drain)
   - Alternate Function
@@ -25,7 +29,7 @@ When an I/O port is programmed as input, the output buffer is disabled, the schm
 The data present on the I/O pin are sampled into the input data register for every bus clock cycle and read access to the input data register provides the I/O state of that pin.
 ```
 
-- Output Speed
+- Output Speed Register
   - Low Speed
   - Medium Speed
   - High Speed
@@ -55,4 +59,6 @@ Input Data Register will be updated for every one AHB1 bus clock cycle.
 
 ```
 Each pin has 16 different alternate functions (4 bits to config)
+
+The datasheet describes the configurable functions for each pin.
 ```
