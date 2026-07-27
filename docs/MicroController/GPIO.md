@@ -62,3 +62,37 @@ Each pin has 16 different alternate functions (4 bits to config)
 
 The datasheet describes the configurable functions for each pin.
 ```
+
+## Absolute Maximum Ratings (AMR)
+
+Absolute Maximum Ratings (AMR) define the ultimate physical limits of an electronic component. Exceeding these values will cause permanent damage to the device.
+
+---
+
+### 📌 Core Concepts
+
+- **Absolute Boundaries:** These values are destruction thresholds, not normal operating ranges.
+- **No Functional Guarantee:** Device operation is not guaranteed at or near these maximum limits.
+- **Reliability Risk:** Exposure to AMR conditions even briefly can degrade device lifespan and reliability.
+
+---
+
+### Common AMR Parameters
+
+#### 1. Voltage Limits
+
+- **$V_{DD} \ / \ V_{CC}$:** Maximum allowable DC power supply voltage.
+- **$V_{IN}$:** Maximum voltage allowed on input pins (often capped at $V_{DD} + 0.3V$).
+
+#### 2. Current Limits
+
+- **$I_{OUT}$:** Maximum continuous current a single output pin can source or sink.
+
+#### 3. Temperature Limits
+
+- **$T_J$:** Maximum allowable junction temperature inside the silicon die (typically 150°C).
+- **$T_{STG}$:** Storage temperature range when the device is unpowered.
+
+#### 4. ESD Ratings
+
+- **Electrostatic Discharge:** Maximum static voltage the device can withstand (e.g., Human Body Model / HBM).
