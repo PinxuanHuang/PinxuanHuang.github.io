@@ -44,3 +44,39 @@ SPI is a **synchronous serial communication protocol** used in embedded systems 
 - **Type:** Control Pin (No data)
 - **Direction:** Master -> Slave
 - **Function:** Used by the Master to select which individual Slave to talk to. Optional if there is only one Slave.
+
+## Protocol Comparison Table (for example)
+
+| Protocol   | Max Speed             | Max Distance          | Signaling Type     | Ideal Scenario          |
+| :--------- | :-------------------- | :-------------------- | :----------------- | :---------------------- |
+| **SPI**    | **High** (~25 Mbps)   | **Short** (< 10 feet) | Single-Ended (TTL) | Same PCB / Board        |
+| **I2C**    | **Low** (~3.4 Mbps)   | **Medium** (> SPI)    | Single-Ended (TTL) | Same PCB / Board        |
+| **RS-485** | **Medium** (~10 Mbps) | **Long** (1000+ feet) | Differential       | Inter-device / Factory  |
+| **CAN**    | **Medium**            | **Long**              | Differential       | Automotive / Industrial |
+
+---
+
+### 1. SPI: The Speed King for Short Distances
+
+- **High Data Rates:** Max speed can reach **Peripheral Clock / 2** (e.g., 25 Mbps on a 50 MHz clock).
+- **Distance Capped:** Limited to **10 feet or less** due to single-ended (TTL) signaling.
+- **Best Use Cases:** High-frequency sensors, displays, and high-speed serial Flash/EEPROM memory.
+
+### 2. I2C: Complex Features but Slower Speed
+
+- **Slower Throughput:** Capped around 3.4 Mbps even in High-Speed mode.
+- **Feature Rich:** More complex protocol than SPI, allowing better device management over slightly longer distances.
+- **Best Use Cases:** Low-speed sensor data collection on the same board.
+
+### 3. Long-Distance Protocols: RS-485 & CAN
+
+- **Noise Immunity:** Utilize **differential signaling** to cancel out environmental noise.
+- **Extended Range:** Can reliably cover hundreds or thousands of feet (e.g., 100ft to 1000ft+).
+- **Best Use Cases:** Automotive networks, factory automation, and building/home automation.
+
+---
+
+#### Summary
+
+- **Single PCB Environment:** Use **SPI** or **I2C** to connect microcontrollers to onboard chips.
+- **Large Area / Inter-Device Environment:** Use **CAN**, **Ethernet**, or **RS-485** to connect separate modules or systems.
