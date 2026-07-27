@@ -81,17 +81,17 @@ Absolute Maximum Ratings (AMR) define the ultimate physical limits of an electro
 
 #### 1. Voltage Limits
 
-- **$V_{DD} \ / \ V_{CC}$:** Maximum allowable DC power supply voltage.
-- **$V_{IN}$:** Maximum voltage allowed on input pins (often capped at $V_{DD} + 0.3V$).
+- **`VDD` / `VCC`**：Maximum allowable DC power supply voltage.
+- **`VIN`**：Maximum voltage allowed on input pins (often capped at `VDD` + 0.3V).
 
 #### 2. Current Limits
 
-- **$I_{OUT}$:** Maximum continuous current a single output pin can source or sink.
+- **`I_OUT`:** Maximum continuous current a single output pin can source or sink.
 
 #### 3. Temperature Limits
 
-- **$T_J$:** Maximum allowable junction temperature inside the silicon die (typically 150°C).
-- **$T_{STG}$:** Storage temperature range when the device is unpowered.
+- **`T_J`:** Maximum allowable junction temperature inside the silicon die (typically 150°C).
+- **`T_STG`:** Storage temperature range when the device is unpowered.
 
 #### 4. ESD Ratings
 
