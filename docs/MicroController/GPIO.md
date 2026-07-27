@@ -96,3 +96,15 @@ Absolute Maximum Ratings (AMR) define the ultimate physical limits of an electro
 #### 4. ESD Ratings
 
 - **Electrostatic Discharge:** Maximum static voltage the device can withstand (e.g., Human Body Model / HBM).
+
+## General Operating Conditions
+
+General Operating Conditions define the safe and verified environmental and electrical boundaries for a device.
+
+---
+
+### Core Concepts
+
+- **Guaranteed Performance:** The manufacturer guarantees that the device/microcontroller will function properly and meet all datasheet specifications within this range.
+- **Design Baseline:** Engineers must design the circuit to ensure the system operates strictly inside these parameters.
+- **Dependent Metrics:** All electrical characteristics (e.g., speed, power consumption) are measured and validated under these conditions.
