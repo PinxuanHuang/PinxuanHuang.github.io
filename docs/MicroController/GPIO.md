@@ -69,7 +69,7 @@ Absolute Maximum Ratings (AMR) define the ultimate physical limits of an electro
 
 ---
 
-### 📌 Core Concepts
+### Core Concepts
 
 - **Absolute Boundaries:** These values are destruction thresholds, not normal operating ranges.
 - **No Functional Guarantee:** Device operation is not guaranteed at or near these maximum limits.
