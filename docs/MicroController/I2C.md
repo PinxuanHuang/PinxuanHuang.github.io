@@ -23,9 +23,10 @@ The **I2C (Inter-Integrated Circuit)** protocol—pronounced "I squared C" or "I
 | **Acknowledge (ACK)** | Hardware automatically ACKs every received byte.             | No native automatic ACKing.                                       |
 | **Clock Control**     | Slaves can pause the master via **Clock Stretching**.        | Slaves have zero control over the serial clock.                   |
 
-:::tip Use Case Selection
+```
+* tip Use Case Selection
 Because SPI is significantly faster than I2C, it is ideal for high data-rate applications (like streaming audio/video samples). I2C is best suited for low data-rate requirements, such as reading static values from basic sensors, where saving physical pins is a priority.
-:::
+```
 
 ## The 2-Pin Hardware Setup
 
@@ -33,3 +34,31 @@ One of the biggest advantages of I2C is its simplicity at the hardware level. Th
 
 - **SCL (Serial Clock):** Carries the clock signal.
 - **SDA (Serial Data):** Carries the data payload.
+
+---
+
+## Signal Characteristics
+
+Both the **SCL** and **SDA** lines share specific physical and electrical requirements to function correctly on an I2C bus.
+
+- **Bidirectional Communication:** Both lines are bidirectional, allowing signals to flow in either direction between master and slave devices.
+- **Idle State:** When the I2C bus is free (idle), both lines must be held at a **High** logic state.
+- **Bus Capacitance:** The physical capacitance of the bus directly limits the total number of interfaces and devices that can be safely connected to the lines.
+
+## The Open-Drain Configuration
+
+The most critical hardware requirement for any device connected to an I2C bus is that its output stages **must** be set to an **Open-Drain** (or open collector) configuration.
+
+### How Open-Drain Works
+
+In a standard push-pull GPIO configuration, both P-MOS and N-MOS transistors are utilized to drive the line high and low.
+
+- In an **Open-Drain** configuration, the P-MOS transistor is completely disabled or absent, leaving only the N-MOS transistor.
+- Consequently, the device can actively pull the line low (to ground), but it **cannot actively drive the line high**.
+
+### Pull-Up Resistors
+
+Because open-drain pins cannot generate a high voltage on their own, they rely entirely on **pull-up resistors** connected to the positive supply voltage (Vdd) to achieve the high state.
+
+- You can utilize either the microcontroller's internal pull-up resistors or connect external pull-up resistors to the bus.
+- For proper functioning, the exact resistance value should be calculated based on standard I2C bus capacitance formulas.
