@@ -40,3 +40,28 @@ A standard USART hardware module typically consists of several internal blocks t
 - **Transmit and Receive Control Blocks:** Manage the state and flow of the communication.
 - **Transmit and Receive Buffers:** Temporarily hold the data being sent or received.
 - **FIFO (First-In, First-Out) Buffer Memory:** An advanced feature that queues multiple bytes of data, drastically reducing CPU overhead.
+
+## Basic Bi-Directional Communication (No Flow Control)
+
+When hardware flow control is not used, UART requires a minimum of just two pins for bi-directional communication:
+
+- **TX (Transmit):** Used to send data out of the UART module.
+  - **Idle State:** When no data is being transmitted, the TX line is strictly held **HIGH**.
+- **RX (Receive):** Used to receive data into the UART module.
+  - **Start Bit Detection:** The UART module continuously samples the RX line. When it detects a transition that signifies a **start bit**, frame reception kicks in and continues until the module detects the idle line again.
+
+## Hardware Flow Control (RTS and CTS)
+
+To manage data flow and prevent buffer overruns, UART can utilize hardware flow control, which introduces two additional **active-low** pins:
+
+- **CTS (Clear To Send):** This pin controls the transmission behavior. The UART module will only transmit data on the TX line if its CTS pin is pulled **LOW** by the external device. If it is HIGH, transmission is held until the pin is asserted LOW.
+- **RTS (Request To Send):** The device uses this line to inform the connected device that it needs or is ready for data. It does this by asserting the line **LOW**.
+
+### Device Interconnection
+
+In a standard hardware flow control setup, the control lines are cross-connected between the two communicating devices:
+
+- **Device A's RTS** connects to **Device B's CTS**.
+- **Device B's RTS** connects to **Device A's CTS**.
+
+**How it works:** When Device A wants data from Device B, Device A asserts its RTS pin LOW. This physically pulls Device B's CTS pin LOW, granting Device B the hardware permission to begin transmitting data on its TX line.
