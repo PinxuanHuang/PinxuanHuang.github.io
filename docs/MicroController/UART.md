@@ -65,3 +65,61 @@ In a standard hardware flow control setup, the control lines are cross-connected
 - **Device B's RTS** connects to **Device A's CTS**.
 
 **How it works:** When Device A wants data from Device B, Device A asserts its RTS pin LOW. This physically pulls Device B's CTS pin LOW, granting Device B the hardware permission to begin transmitting data on its TX line.
+
+## What is a Frame?
+
+A **frame** refers to the entire data packet that is sent or received during communication.
+
+## The UART Frame Structure
+
+In UART communication, a typical frame follows a specific, sequential order of bits. While the core structure is standard, several parameters are configurable via the UART peripheral's registers:
+
+- **Start Bit:** Signals the beginning of the communication frame. It is always held **LOW** for a duration of exactly 1 bit.
+- **Data Bits:** The actual data payload being transmitted, sent from the Least Significant Bit (LSB) to the Most Significant Bit (MSB). The payload length is typically configurable between **5 to 9 bits**.
+- **Parity Bit (Optional):** Used for basic error checking. It consumes exactly 1 bit. If enabled, the hardware can be configured to use either an **even parity** or **odd parity** mechanism.
+- **Stop Bit:** Signals the end of the frame. It is always held **HIGH**. The duration of the stop condition is configurable, typically to **1, 1.5, or 2 bit** lengths.
+
+## What is Baud Rate?
+
+The **baud rate** defines how fast data is sent over a serial line. It is most commonly expressed in units of **bits per second (bps)**.
+
+The primary requirement for successful serial communication is that both the transmitting and receiving devices must be configured to operate at the exact same baud rate. If there is a mismatch, the receiver will sample the data line at the wrong times, leading to corrupted data.
+
+### Common Baud Rates
+
+Baud rates can theoretically be set to almost any value, provided both devices support it. However, standard rates are typically used.
+
+## Bit Duration and Timing
+
+You can determine the exact time it takes to transmit a single bit (i.e., how long the transmitter holds the serial line HIGH or LOW for a given bit).
+
+As you increase the baud rate, the duration of each bit becomes smaller, meaning your overall data packet is transmitted much more quickly.
+
+### Calculation Example (9600 bps)
+
+If the baud rate is 9600 bps, the duration of a single bit is calculated as:
+
+- 1 / 9600 approx 0.00010416 seconds, or roughly **104 microseconds (µs)**.
+- Therefore, transmitting 4 bits of data would take approximately **416 µs** .
+
+## Hardware Limitations
+
+While higher baud rates mean faster data transfer, there are physical and architectural limits to how fast data can be sent. The maximum achievable baud rate is heavily dependent on the **peripheral clock frequency** of the UART hardware.
+
+## The Role of Synchronization Bits
+
+In asynchronous serial communication, synchronization bits are special bits transferred with each chunk of data. Because there is no shared clock line, these bits—specifically the **Start** and **Stop** bits—are essential for marking the precise beginning and end of a data packet.
+
+## Start Bit
+
+Every UART frame begins with exactly **one** start bit.
+
+- **Line Transition:** The start bit is indicated by the data line transitioning from its default idle state (**HIGH**) to an active **LOW** state.
+
+## Stop Bit(s)
+
+A UART frame concludes with one or more stop bits, which return the data line to its idle state by holding it **HIGH**.
+
+- **Configurability:** While there is always only one start bit, the number of stop bits is configurable.
+- **Typical Usage:** Most standard applications use **1** stop bit.
+- **High-Speed Usage:** If your application operates at a very high baud rate (e.g., in the megabits per second range), it is often recommended to configure the hardware to insert **2** stop bits to give the receiver adequate time to process the frame.
