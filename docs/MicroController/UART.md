@@ -123,3 +123,65 @@ A UART frame concludes with one or more stop bits, which return the data line to
 - **Configurability:** While there is always only one start bit, the number of stop bits is configurable.
 - **Typical Usage:** Most standard applications use **1** stop bit.
 - **High-Speed Usage:** If your application operates at a very high baud rate (e.g., in the megabits per second range), it is often recommended to configure the hardware to insert **2** stop bits to give the receiver adequate time to process the frame.
+
+## What is a Parity Bit?
+
+Adding a parity bit to a data frame is the simplest method of error detection in serial communication. **Parity** simply refers to the count of `1`s appearing in the binary representation of a number.
+
+For example, the decimal number **55** has the binary form `00110111`. Counting the `1`s in this pattern yields 5, which is an odd number.
+
+When configuring a UART peripheral, you have two options for parity selection: **Even Parity** and **Odd Parity**.
+
+## Even vs. Odd Parity
+
+The core rule to remember is simple:
+
+- **Even parity** results in an _even_ number of `1`s when counted across the entire set of bits (Data Bits + Parity Bit).
+- **Odd parity** results in an _odd_ number of `1`s when counted across the entire set of bits (Data Bits + Parity Bit).
+
+## Core Pins and Interfaces
+
+The USART hardware block supports both synchronous and asynchronous communication. When operating in asynchronous (UART) mode, it primarily utilizes four key pins:
+
+- **TX (Transmit) & RX (Receive):** The primary lines used for full-duplex data transmission and reception.
+- **RTS & CTS:** The pins utilized for hardware flow control.
+- If the block is configured for synchronous mode (USART), an additional serial clock pin is actively used to synchronize the data transfer.
+
+## Baud Rate Generation Block
+
+To ensure data is sampled and transmitted at the correct speed, the peripheral includes a dedicated baud rate generation block:
+
+- **Clock Division:** The microcontroller's peripheral clock undergoes various internal divisions to produce the precise baud rate required for the data transfer.
+- **The `USART_BRR` Register:** This specific register handles the baud rate configuration. It must be carefully programmed using its internal **Mantissa** and **Fraction** bit fields to accurately lock in the desired communication speed.
+
+## What is Oversampling?
+
+Oversampling is a technique utilized by the UART peripheral's receive engine to accurately recover incoming data and distinguish valid signals from line noise.
+
+## Oversampling Methods: By 16 vs. By 8
+
+### 1. Oversampling by 16
+
+When this method is selected, the receiver engine divides one bit period into 16 individual samples.
+
+- To evaluate the bit, the hardware specifically analyzes the samples taken at positions **8, 9, and 10**.
+- If all three samples are identically `000` or `111`, the bit is validated as a `0` or `1`, respectively.
+
+### 2. Oversampling by 8
+
+When this method is selected, the receiver engine takes 8 samples within one bit period.
+
+- Similar to the 16-sample method, a subset of these samples is evaluated to determine if the incoming bit is a `0` or `1`.
+
+### Handling Noise Errors
+
+If the analyzed sample values are mixed (e.g., `010` or `101`) instead of being uniform, the hardware cannot perfectly guarantee the validity of the bit.
+
+## How to Choose the Proper Oversampling Method
+
+The choice between 16x and 8x oversampling dictates the balance between maximum communication speed and tolerance for clock deviations (which occur due to temperature variations in RC oscillators, etc.).
+
+| Oversampling Method | Maximum Baud Rate       | Clock Deviation Tolerance | Best Use Case                                                                                          |
+| :------------------ | :---------------------- | :------------------------ | :----------------------------------------------------------------------------------------------------- |
+| **By 16**           | `Peripheral Clock / 16` | **High**                  | Use in **noisy environments** or when using an unstable clock source (like an internal RC oscillator). |
+| **By 8**            | `Peripheral Clock / 8`  | **Low**                   | Use in **noise-free environments** to achieve much higher baud rates.                                  |
