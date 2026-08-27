@@ -69,3 +69,68 @@ Once the signals are converted by the transceiver, the node is physically attach
 - The node's `CANH` terminal connects to the shared `CANH` line of the bus.
 - The node's `CANL` terminal connects to the shared `CANL` line of the bus.
 - The main bus lines are capped at both ends by **Termination Resistors (RL)** to prevent electrical signal reflection from corrupting the data.
+
+## What is Differential Signaling?
+
+At its core, differential signaling is a method of data transmission that uses two complementary electrical signals to transmit a single piece of information. To understand its value, we must compare it to the traditional alternative:
+
+- **Single-Ended Signaling:** Uses a single data wire. A high voltage (e.g., +5V or +3.3V) represents a logical 1, and ground (0V) represents a logical 0. Because it relies on absolute voltage, this method is highly vulnerable to external electrical interference.
+- **Differential Signaling:** Uses two paired wires (like CAN High and CAN Low). The receiver does not measure the absolute voltage of either wire against ground. Instead, it extracts the data by calculating the **potential difference** between the two complementary signals.
+
+## The Mechanics of Voltage Logic
+
+Imagine a system using +5V and -5V to create the differential pair. The logic states are defined entirely by the mathematical gap between them:
+
+1.  **Transmitting Logical 1:** Signal 1 is driven to +5V and Signal 2 is driven to -5V. The receiver calculates the difference: `(+5V) - (-5V) = +10V`. This large positive difference is interpreted as a logical 1.
+2.  **Transmitting Logical 0:** Signal 1 is driven to -5V and Signal 2 is driven to +5V. The receiver calculates the difference: `(-5V) - (+5V) = -10V`. This large negative difference is interpreted as a logical 0.
+
+## Noise Cancellation and Immunity
+
+The most significant advantage of differential signaling is its natural immunity to ambient noise. When electrical interference (noise) hits a differential cable:
+
+- The noise voltage spike is added **equally** to both wires at the exact same time.
+- Because the receiver calculates the _difference_ between the two wires, the identical noise spikes are mathematically subtracted and **completely cancelled out**.
+- This ensures the true signal survives intact, making it ideal for harsh, dynamic environments like an automotive engine bay or a factory floor.
+
+## The Transceiver Architecture
+
+The CAN transceiver acts as the bridge between the microcontroller and the physical bus. It receives digital input on its Driver (D) pin and outputs differential signals on `CANH` and `CANL`. Notably, the transceiver also loops the transmitted signal directly back into its Receiver (R) pin. This means that whatever a node transmits onto the bus is simultaneously "heard" by its own receiver engine.
+
+The logic levels on a CAN bus are not defined as standard HIGH or LOW voltages, but rather as **Recessive** and **Dominant** states based on the voltage difference between `CANH` and `CANL`.
+
+## Logical 1: The Recessive State
+
+When the microcontroller wants to transmit a **Logical 1**, the bus enters the Recessive state.
+
+1.  **Voltage Levels:** The transceiver drives both `CANH` and `CANL` to the exact same nominal voltage (e.g., 2.3V or 2.5V, depending on the specific transceiver model like the TI SN65xx).
+2.  **The Difference:** The receiver calculates the difference between `CANH` and `CANL`. Since both are at the same voltage, the difference is **0V**.
+3.  **Interpretation:** A 0V differential is interpreted by all nodes on the bus as a Logical 1.
+
+## Logical 0: The Dominant State
+
+When the microcontroller wants to transmit a **Logical 0**, the bus enters the Dominant state.
+
+1.  **Voltage Levels:** The transceiver drives `CANH` to a high voltage (typically VCC, e.g., 3.3V) and pulls `CANL` to a lower voltage (e.g., 1.25V).
+2.  **The Difference:** The receiver calculates the difference (e.g., 3.3V - 1.25V ≈ **2.0V**).
+3.  **Interpretation:** A positive differential of roughly 2V is interpreted by all nodes on the bus as a Logical 0.
+
+## Why "Dominant" and "Recessive"?
+
+These terms define how signals interact when multiple nodes transmit at the exact same time:
+
+- **Dominant Overrides Recessive:** A Logical 0 (Dominant) will physically pull the bus voltage apart, overriding a Logical 1 (Recessive).
+- If Node A transmits a Logical 1 (Difference = 0V) and Node B simultaneously transmits a Logical 0 (Difference = 2V), the physical wires will reflect the 2V difference. The bus will register a Logical 0. This physical dominance is the foundation of CAN bus message arbitration and priority resolution.
+
+## Balanced Differential Signaling
+
+As established, the CAN bus derives its robust fault tolerance and noise immunity from differential signaling. This method provides several specific physical advantages:
+
+- **Field-Canceling Effect:** The signaling is "balanced," meaning the electrical current flowing through the CAN High and CAN Low lines is equal but travels in opposite directions. This opposite flow naturally cancels out electromagnetic fields, resulting in remarkably low noise emissions from the cables themselves.
+- **Common-Mode Rejection:** By combining balanced differential receivers with twisted-pair cabling, the network effectively rejects common-mode noise (interference that strikes both wires simultaneously). This allows for high-speed data rates even in harsh industrial or automotive environments.
+
+## Cabling and Hardware Termination
+
+To maintain signal integrity and prevent data corruption, the physical wiring of a CAN network must adhere to strict impedance specifications.
+
+- **Twisted-Pair Cables:** The network should use shielded or unshielded twisted-pair cables designed with a specific **120-ohm characteristic impedance** ($Z_0$ or $R_L$).
+- **Mandatory 120-Ohm Resistors:** It is absolutely mandatory that the two physical ends of the CAN bus are terminated with 120-ohm resistors. Without these termination resistors, high-frequency electrical signals will hit the ends of the wire and reflect back (signal reflection), corrupting the dominant and recessive voltage states and causing the network to fail.
