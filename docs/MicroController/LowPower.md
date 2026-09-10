@@ -77,3 +77,9 @@ This allows the MCU to reduce power consumption while waiting for an event.
 Key Point:
 Arm Cortex-M defines how the processor requests and enters sleep, while the MCU vendor defines what actually happens to clocks, memories, peripherals, and power domains during that sleep state.
 ```
+
+## Low-Power Mode Power Saving Tips
+
+- Disable unused peripheral clocks
+- Configure GPIOs as analog mode
+- Minimize ISR execution time
