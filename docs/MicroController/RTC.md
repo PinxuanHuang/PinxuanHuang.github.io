@@ -50,6 +50,72 @@ The calendar can track:
 - Date and time fields must be written into the correct unit/tens bit fields in the RTC registers.
 - After initialization, the RTC maintains the date and time by itself.
 
+## RTC Clock Source
+
+The RTC requires a clock source before the calendar, alarm, or wake-up timer can operate.
+
+STM32 RTC can typically be driven by one of three clock sources:
+
+| Clock Source | Typical Frequency                                    | Accuracy          | Notes                                                                                              |
+| :----------- | :--------------------------------------------------- | :---------------- | :------------------------------------------------------------------------------------------------- |
+| `LSE`        | `32.768 kHz`                                         | High              | External low-speed crystal oscillator. Best choice for accurate calendar applications.             |
+| `LSI`        | Around `32 kHz` or `37 kHz`, depending on MCU series | Low               | Internal low-speed RC oscillator. Convenient, but not accurate enough for production calendar use. |
+| `HSE`        | Board-dependent, then divided down                   | Depends on source | External high-speed oscillator. Usually divided before being used by RTC.                          |
+
+The selected source becomes the **RTC clock**. The clock source is selected through the `RTCSEL` bits in the `RCC_BDCR` register.
+
+### RTC Clock Path
+
+The RTC clock is divided by prescalers before it reaches the calendar unit.
+
+```text
+LSE / LSI / HSE
+      |
+      v
+ RTC clock source mux
+      |
+      v
+ Asynchronous prescaler
+      |
+      v
+ Synchronous prescaler
+      |
+      v
+ 1 Hz calendar clock
+      |
+      v
+ Calendar unit
+```
+
+The calendar unit must receive a **1 Hz** clock because calendar time advances once per second. If the prescalers are configured incorrectly, the calendar may run too fast, too slow, or not behave correctly.
+
+### Prescaler Examples
+
+The RTC prescalers divide the selected clock source down to 1 Hz.
+
+| RTC Source | Input to RTC Prescalers      | Asynchronous Division | Synchronous Division | Result                        |
+| :--------- | :--------------------------- | :-------------------- | :------------------- | :---------------------------- |
+| `LSE`      | `32768 Hz`                   | `128`                 | `256`                | `32768 / 128 / 256 = 1 Hz`    |
+| `LSI`      | `32000 Hz`                   | `128`                 | `250`                | `32000 / 128 / 250 = 1 Hz`    |
+| `HSE`      | `1 MHz` after HSE prescaling | `125`                 | `8000`               | `1000000 / 125 / 8000 = 1 Hz` |
+
+Register values are commonly programmed as division value minus one:
+
+| Desired Division | Register Value Example |
+| :--------------- | :--------------------- |
+| Divide by `128`  | Program `127`          |
+| Divide by `256`  | Program `255`          |
+| Divide by `250`  | Program `249`          |
+| Divide by `125`  | Program `124`          |
+| Divide by `8000` | Program `7999`         |
+
+### Clock Source Selection Guideline
+
+- Use **LSE** when accurate date and time keeping is important.
+- Use **LSI** only when approximate timing is acceptable.
+- Avoid LSI for production calendar applications because RC oscillator accuracy is much worse than a crystal oscillator.
+- When using **HSE**, first divide it to the required RTC input range, then configure the RTC asynchronous and synchronous prescalers to generate 1 Hz.
+
 ### BCD vs Binary in RTC
 
 BCD stores each decimal digit separately in 4-bit groups. This is different from normal binary encoding.
